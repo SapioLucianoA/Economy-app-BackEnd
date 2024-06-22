@@ -1,9 +1,6 @@
 package com.economix.economy.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -16,14 +13,22 @@ public class Transactions {
     private String description;
     private Double amount;
     private LocalDateTime time;
+    private TransactionType transactionType;
+    private boolean isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     public Transactions() {
     }
 
-    public Transactions(String description, Double amount, LocalDateTime time) {
+    public Transactions(String description, Double amount, LocalDateTime time, TransactionType transactionType, boolean isActive) {
         this.description = description;
         this.amount = amount;
         this.time = time;
+        this.transactionType = transactionType;
+        this.isActive = isActive;
     }
 
     public String getId() {
@@ -52,5 +57,30 @@ public class Transactions {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
 }
