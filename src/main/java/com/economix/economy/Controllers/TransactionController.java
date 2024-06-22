@@ -47,10 +47,8 @@ public class TransactionController {
                 if (transactionRecord.amount().isNaN()){
                     return new ResponseEntity<>("Please complete the amount with a valid number", HttpStatus.FORBIDDEN);
                 }
-                if (transactionRecord.transactionType().toString().isBlank()){
-                    return new ResponseEntity<>("Transaction type Missing", HttpStatus.FORBIDDEN);
-                }
-                Transactions transaction = new Transactions(transactionRecord.description(), transactionRecord.amount(), LocalDateTime.now(), transactionRecord.transactionType(), true);
+
+                Transactions transaction = new Transactions(transactionRecord.description(), transactionRecord.amount(), LocalDateTime.now(), true);
 
                 Client client = clientRepository.findClientByEmail(authentication.getName());
                 client.addTransaction(transaction);

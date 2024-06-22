@@ -2,6 +2,7 @@ package com.economix.economy;
 
 import com.economix.economy.Models.Admin;
 import com.economix.economy.Models.Client;
+import com.economix.economy.Models.TransactionType;
 import com.economix.economy.Models.Transactions;
 import com.economix.economy.Repositories.AdminRepository;
 import com.economix.economy.Repositories.ClientRepository;
@@ -39,8 +40,8 @@ public class EconomyApplication {
 
 
 
-			Transactions transaction1 = new Transactions("Buying Ram", -13000.00, LocalDateTime.now().minusDays(15));
-			Transactions transactions2 = new Transactions("Materitas Web", 7000.00, LocalDateTime.now());
+			Transactions transaction1 = new Transactions("Buying Ram", -13000.00, LocalDateTime.now().minusDays(15), true);
+			Transactions transactions2 = new Transactions("Materitas Web", 7000.00, LocalDateTime.now(), true);
 
 			client1.addTransaction(transaction1);
 			client1.addTransaction(transactions2);

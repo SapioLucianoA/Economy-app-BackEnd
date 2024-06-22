@@ -13,7 +13,6 @@ public class Transactions {
     private String description;
     private Double amount;
     private LocalDateTime time;
-    private TransactionType transactionType;
     private boolean isActive;
 
     @ManyToOne
@@ -23,11 +22,10 @@ public class Transactions {
     public Transactions() {
     }
 
-    public Transactions(String description, Double amount, LocalDateTime time, TransactionType transactionType, boolean isActive) {
+    public Transactions(String description, Double amount, LocalDateTime time, boolean isActive) {
         this.description = description;
         this.amount = amount;
         this.time = time;
-        this.transactionType = transactionType;
         this.isActive = isActive;
     }
 
@@ -76,11 +74,4 @@ public class Transactions {
         isActive = active;
     }
 
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
 }
