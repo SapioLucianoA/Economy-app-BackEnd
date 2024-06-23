@@ -45,4 +45,8 @@ public class ClientDTO {
     public Set<TransactionDTO> getTransactionDTOS() {
         return transactionDTOS;
     }
+
+    public Set<PaymentDTO> getPaymentDTOS() {
+        return paymentDTOS;
+    }
 }

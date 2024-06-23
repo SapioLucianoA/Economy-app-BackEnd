@@ -28,7 +28,6 @@ public class TransactionController {
     @Autowired
     private ClientRepository clientRepository;
 
-    private final Lock requestLock = new ReentrantLock();
 
 
     @GetMapping
@@ -39,31 +38,31 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<?> newTransaction(@RequestBody TransactionRecord transactionRecord, Authentication authentication) {
-        try {
-            if (requestLock.tryLock()) {
-                if (transactionRecord.description().isEmpty()){
-                    return new ResponseEntity<>("Description missing", HttpStatus.FORBIDDEN);
-                }
-                if (transactionRecord.amount().isNaN()){
-                    return new ResponseEntity<>("Please complete the amount with a valid number", HttpStatus.FORBIDDEN);
-                }
 
-                Transactions transaction = new Transactions(transactionRecord.description(), transactionRecord.amount(), LocalDateTime.now(), true);
-
-                Client client = clientRepository.findClientByEmail(authentication.getName());
-                client.addTransaction(transaction);
-                clientRepository.save(client);
-                transactionRepository.save(transaction);
-                return new ResponseEntity<>("client created success!!!!!!", HttpStatus.CREATED);
-            }
-            else {
-                return new ResponseEntity<>("Request in progress. Please wait.", HttpStatus.TOO_MANY_REQUESTS);
-            }
-
+        if (transactionRecord.description().isEmpty()){
+            return new ResponseEntity<>("Description missing", HttpStatus.FORBIDDEN);
         }
-        finally {
-            requestLock.unlock();
+        if (transactionRecord.amount().isNaN()){
+            return new ResponseEntity<>("Please complete the amount with a valid number", HttpStatus.FORBIDDEN);
         }
+        if(transactionRecord.amount() == 0){
+            return new ResponseEntity<>("the amount cant be 0", HttpStatus.FORBIDDEN);
+        }
+        Transactions transaction = new Transactions(transactionRecord.description(), transactionRecord.amount(), LocalDateTime.now(), true);
+
+        Client client = clientRepository.findClientByEmail(authentication.getName());
+        if (transactionRecord.amount()  >   0){
+            client.setTotalAmount(client.getTotalAmount() + transaction.getAmount());
+        }
+        if (transactionRecord.amount() < 0 ){
+            client.setTotalAmount(client.getTotalAmount() - transaction.getAmount());
+        }
+        client.addTransaction(transaction);
+        clientRepository.save(client);
+        transactionRepository.save(transaction);
+
+        return new ResponseEntity<>("client created success!!!!!!", HttpStatus.CREATED);
+
     }
 }
 

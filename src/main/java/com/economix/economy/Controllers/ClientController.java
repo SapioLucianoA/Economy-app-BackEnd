@@ -29,6 +29,7 @@ public class ClientController {
     private TransactionRepository transactionRepository;
 
     private final Lock requestLock = new ReentrantLock();
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 

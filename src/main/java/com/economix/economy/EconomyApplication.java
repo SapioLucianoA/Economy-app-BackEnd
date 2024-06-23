@@ -33,9 +33,9 @@ public class EconomyApplication {
 		return args -> {
 			System.out.println("app launching");
 
-			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"), 0.00);
+			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"), 300000.00);
 
-			Admin admin1 = new Admin("Lucky", "Sapio", "123@123.com", passwordEncoder.encode("123"), 0.00);
+			Admin admin1 = new Admin("Lucky", "Sapio", "123@123.com", passwordEncoder.encode("123"), 500000.00);
 
 
 
